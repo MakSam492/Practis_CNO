@@ -1,0 +1,118 @@
+﻿<Page x:Class="CNO.Pages.ClientMainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CNO.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Страница клиента" Background="#F5F5F5">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок и кнопка выхода -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Text="Страница клиента" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,20"/>
+
+            <!-- Кнопка выхода -->
+            <Button Content="Выйти" 
+                    Grid.Column="1" 
+                    Width="100" 
+                    Padding="10" 
+                    Background="#F44336" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    BorderThickness="0" 
+                    Cursor="Hand" 
+                    Click="LogoutButton_Click"
+                    Margin="0,0,0,20"/>
+        </Grid>
+
+        <!-- Панель навигации -->
+        <TabControl Grid.Row="1">
+            <!-- Вкладка для добавления записи на прием -->
+            <TabItem Header="Запись на прием">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Выберите врача:" FontSize="14"/>
+                    <ComboBox x:Name="DoctorsComboBox" FontSize="14" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Выберите дату и время:" FontSize="14"/>
+                    <DatePicker x:Name="AppointmentDatePicker" FontSize="14" Margin="0,0,0,10"/>
+                    <TextBox x:Name="AppointmentTimeTextBox" FontSize="14" Margin="0,0,0,10"/>
+
+                    <Button Content="Записаться" 
+                            Width="150" 
+                            Padding="10" 
+                            Background="#4CAF50" 
+                            Foreground="White" 
+                            FontSize="14" 
+                            BorderThickness="0" 
+                            Cursor="Hand" 
+                            Click="BookAppointment_Click"
+                            HorizontalAlignment="Left"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Вкладка для просмотра информации о врачах -->
+            <TabItem Header="Врачи">
+                <ListBox x:Name="DoctorsList" 
+                         Background="White" 
+                         BorderThickness="0" 
+                         Padding="10">
+                    <!-- Пример информации о враче -->
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBlock Text="Доктор Иванов Иван Иванович" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="Специализация: Терапевт" FontSize="12"/>
+                            <TextBlock Text="Контактная информация: +7 (123) 456-78-90" FontSize="12"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBlock Text="Доктор Петрова Мария Сергеевна" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="Специализация: Хирург" FontSize="12"/>
+                            <TextBlock Text="Контактная информация: +7 (123) 456-78-91" FontSize="12"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </TabItem>
+
+            <!-- Вкладка для просмотра услуг и их стоимости -->
+            <TabItem Header="Услуги">
+                <ListBox x:Name="ServicesList" 
+                         Background="White" 
+                         BorderThickness="0" 
+                         Padding="10">
+                    <!-- Пример информации об услуге -->
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBlock Text="Консультация терапевта" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="Стоимость: 2000 руб." FontSize="12"/>
+                            <TextBlock Text="Описание: Первичный прием и консультация терапевта." FontSize="12"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBlock Text="Хирургическая операция" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="Стоимость: 15000 руб." FontSize="12"/>
+                            <TextBlock Text="Описание: Проведение хирургической операции под общим наркозом." FontSize="12"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

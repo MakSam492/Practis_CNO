@@ -1,0 +1,108 @@
+﻿<Page x:Class="CNO.Pages.MainPageManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CNO.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Главная страница менеджера" Background="#F5F5F5">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок и кнопка выхода -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Text="Главная страница менеджера" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,20"/>
+
+            <!-- Кнопка выхода -->
+            <Button Content="Выйти" 
+                    Grid.Column="1" 
+                    Width="100" 
+                    Padding="10" 
+                    Background="#F44336" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    BorderThickness="0" 
+                    Cursor="Hand" 
+                    Click="LogoutButton_Click"
+                    Margin="0,0,0,20"/>
+        </Grid>
+
+        <!-- Панель навигации -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Кнопка управления врачами -->
+            <Button Content="Управление врачами" 
+                    Grid.Row="0" 
+                    Grid.Column="0" 
+                    Margin="10" 
+                    Padding="20" 
+                    Background="#4CAF50" 
+                    Foreground="White" 
+                    FontSize="18" 
+                    BorderThickness="0" 
+                    Cursor="Hand" 
+                    Click="ManageDoctors_Click"/>
+
+            <!-- Кнопка управления пациентами -->
+            <Button Content="Управление пациентами" 
+                    Grid.Row="0" 
+                    Grid.Column="1" 
+                    Margin="10" 
+                    Padding="20" 
+                    Background="#2196F3" 
+                    Foreground="White" 
+                    FontSize="18" 
+                    BorderThickness="0" 
+                    Cursor="Hand" 
+                    Click="ManagePatients_Click"/>
+
+            <!-- Кнопка управления записями на прием -->
+            <Button Content="Управление записями" 
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    Margin="10" 
+                    Padding="20" 
+                    Background="#FF9800" 
+                    Foreground="White" 
+                    FontSize="18" 
+                    BorderThickness="0" 
+                    Cursor="Hand" 
+                    Click="ManageAppointments_Click"/>
+
+            <!-- Кнопка редактирования личного кабинета -->
+            <Button Content="Редактировать кабинет" 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    Margin="10" 
+                    Padding="20" 
+                    Background="#9C27B0" 
+                    Foreground="White" 
+                    FontSize="18" 
+                    BorderThickness="0" 
+                    Cursor="Hand" 
+                    Click="EditProfile_Click"/>
+        </Grid>
+    </Grid>
+</Page>
