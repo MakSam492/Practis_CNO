@@ -1,0 +1,266 @@
+-- Таблица Пациенты
+CREATE TABLE Patients (
+    PatientID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    DateOfBirth DATE,
+    Gender CHAR(1),
+    ContactNumber NVARCHAR(20),
+    Email NVARCHAR(50),
+    Address NVARCHAR(100)
+);
+
+-- Таблица Медицинская история
+CREATE TABLE MedicalHistory (
+    HistoryID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    Details NVARCHAR(MAX)
+);
+
+-- Таблица Врачи
+CREATE TABLE Doctors (
+    DoctorID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    Specialization NVARCHAR(50),
+    ContactNumber NVARCHAR(20),
+    Email NVARCHAR(50),
+    PositionID INT
+);
+
+-- Таблица Записи на прием
+CREATE TABLE Appointments (
+    AppointmentID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    AppointmentDate DATE,
+    AppointmentTime TIME,
+    Reason NVARCHAR(255),
+    Status NVARCHAR(50),
+    RoomID INT
+);
+
+-- Таблица Диагнозы
+CREATE TABLE Diagnoses (
+    DiagnosisID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    DiagnosisDate DATE,
+    DiagnosisDetails NVARCHAR(MAX)
+);
+
+-- Таблица Лечение
+CREATE TABLE Treatments (
+    TreatmentID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    TreatmentDate DATE,
+    TreatmentDetails NVARCHAR(MAX),
+    Duration INT
+);
+
+-- Таблица Медицинские записи
+CREATE TABLE MedicalRecords (
+    RecordID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    RecordDate DATE,
+    Notes NVARCHAR(MAX)
+);
+
+-- Таблица Процедуры
+CREATE TABLE Procedures (
+    ProcedureID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    ProcedureDate DATE,
+    ProcedureDetails NVARCHAR(MAX)
+);
+
+-- Таблица Лекарства
+CREATE TABLE Medications (
+    MedicationID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    MedicationName NVARCHAR(100),
+    Dosage NVARCHAR(50),
+    Frequency NVARCHAR(50),
+    StartDate DATE,
+    EndDate DATE
+);
+
+-- Таблица Анализы
+CREATE TABLE Tests (
+    TestID INT PRIMARY KEY IDENTITY(1,1),
+    PatientID INT,
+    DoctorID INT,
+    TestDate DATE,
+    TestType NVARCHAR(100),
+    Results NVARCHAR(MAX)
+);
+
+-- Таблица Сотрудники
+CREATE TABLE Staff (
+    StaffID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    PositionID INT,
+    ContactNumber NVARCHAR(20),
+    Email NVARCHAR(50)
+);
+
+-- Таблица Кабинеты
+CREATE TABLE Rooms (
+    RoomID INT PRIMARY KEY IDENTITY(1,1),
+    RoomNumber NVARCHAR(10),
+    RoomType NVARCHAR(50),
+    Location NVARCHAR(100)
+);
+
+-- Таблица Должности
+CREATE TABLE Positions (
+    PositionID INT PRIMARY KEY IDENTITY(1,1),
+    PositionName NVARCHAR(50),
+    Description NVARCHAR(255)
+);
+
+-- Внешний ключ для MedicalHistory
+ALTER TABLE MedicalHistory
+ADD CONSTRAINT FK_MedicalHistory_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+-- Внешний ключ для Doctors
+ALTER TABLE Doctors
+ADD CONSTRAINT FK_Doctors_Positions FOREIGN KEY (PositionID) REFERENCES Positions(PositionID);
+
+-- Внешние ключи для Appointments
+ALTER TABLE Appointments
+ADD CONSTRAINT FK_Appointments_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE Appointments
+ADD CONSTRAINT FK_Appointments_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+ALTER TABLE Appointments
+ADD CONSTRAINT FK_Appointments_Rooms FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID);
+
+-- Внешние ключи для Diagnoses
+ALTER TABLE Diagnoses
+ADD CONSTRAINT FK_Diagnoses_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE Diagnoses
+ADD CONSTRAINT FK_Diagnoses_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+-- Внешние ключи для Treatments
+ALTER TABLE Treatments
+ADD CONSTRAINT FK_Treatments_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE Treatments
+ADD CONSTRAINT FK_Treatments_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+-- Внешние ключи для MedicalRecords
+ALTER TABLE MedicalRecords
+ADD CONSTRAINT FK_MedicalRecords_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE MedicalRecords
+ADD CONSTRAINT FK_MedicalRecords_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+-- Внешние ключи для Procedures
+ALTER TABLE Procedures
+ADD CONSTRAINT FK_Procedures_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE Procedures
+ADD CONSTRAINT FK_Procedures_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+-- Внешние ключи для Medications
+ALTER TABLE Medications
+ADD CONSTRAINT FK_Medications_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE Medications
+ADD CONSTRAINT FK_Medications_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+-- Внешние ключи для Tests
+ALTER TABLE Tests
+ADD CONSTRAINT FK_Tests_Patients FOREIGN KEY (PatientID) REFERENCES Patients(PatientID);
+
+ALTER TABLE Tests
+ADD CONSTRAINT FK_Tests_Doctors FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID);
+
+-- Внешний ключ для Staff
+ALTER TABLE Staff
+ADD CONSTRAINT FK_Staff_Positions FOREIGN KEY (PositionID) REFERENCES Positions(PositionID);
+
+-- Вставка данных в таблицу Patients
+INSERT INTO Patients (FirstName, LastName, DateOfBirth, Gender, ContactNumber, Email, Address)
+VALUES
+('Иван', 'Иванов', '1985-05-15', 'М', '+71234567890', 'ivan.ivanov@example.com', 'Москва, ул. Ленина, д. 1'),
+('Мария', 'Петрова', '1990-08-22', 'Ж', '+70987654321', 'maria.petrova@example.com', 'Санкт-Петербург, ул. Пушкина, д. 10');
+
+-- Вставка данных в таблицу MedicalHistory
+INSERT INTO MedicalHistory (PatientID, Details)
+VALUES
+(1, 'Аллергия на пыльцу'),
+(2, 'Хронический бронхит');
+
+-- Вставка данных в таблицу Positions
+INSERT INTO Positions (PositionName, Description)
+VALUES
+('Врач', 'Специалист по лечению заболеваний'),
+('Медсестра', 'Помощник врача');
+
+-- Вставка данных в таблицу Doctors
+INSERT INTO Doctors (FirstName, LastName, Specialization, ContactNumber, Email, PositionID)
+VALUES
+('Алексей', 'Смирнов', 'Невролог', '+71122334455', 'alexey.smirnov@example.com', 1),
+('Елена', 'Кузнецова', 'Ортопед', '+76655443322', 'elena.kuznetsova@example.com', 1);
+
+-- Вставка данных в таблицу Staff
+INSERT INTO Staff (FirstName, LastName, PositionID, ContactNumber, Email)
+VALUES
+('Ольга', 'Васильева', 2, '+79988776655', 'olga.vasilyeva@example.com');
+
+-- Вставка данных в таблицу Rooms
+INSERT INTO Rooms (RoomNumber, RoomType, Location)
+VALUES
+('101', 'Кабинет врача', 'Первый этаж'),
+('102', 'Процедурный кабинет', 'Первый этаж');
+
+-- Вставка данных в таблицу Appointments
+INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate, AppointmentTime, Reason, Status, RoomID)
+VALUES
+(1, 1, '2025-10-01', '10:00', 'Плановый осмотр', 'Запланировано', 1),
+(2, 2, '2025-10-02', '14:00', 'Консультация', 'Запланировано', 2);
+
+-- Вставка данных в таблицу Diagnoses
+INSERT INTO Diagnoses (PatientID, DoctorID, DiagnosisDate, DiagnosisDetails)
+VALUES
+(1, 1, '2025-09-30', 'Острый бронхит'),
+(2, 2, '2025-09-29', 'Артрит коленного сустава');
+
+-- Вставка данных в таблицу Treatments
+INSERT INTO Treatments (PatientID, DoctorID, TreatmentDate, TreatmentDetails, Duration)
+VALUES
+(1, 1, '2025-09-30', 'Курс антибиотиков', 10),
+(2, 2, '2025-09-29', 'Физиотерапия', 14);
+
+-- Вставка данных в таблицу MedicalRecords
+INSERT INTO MedicalRecords (PatientID, DoctorID, RecordDate, Notes)
+VALUES
+(1, 1, '2025-09-30', 'Пациент жалуется на кашель'),
+(2, 2, '2025-09-29', 'Боль в колене усиливается при ходьбе');
+
+-- Вставка данных в таблицу Procedures
+INSERT INTO Procedures (PatientID, DoctorID, ProcedureDate, ProcedureDetails)
+VALUES
+(1, 1, '2025-10-01', 'Рентген грудной клетки'),
+(2, 2, '2025-10-02', 'УЗИ коленного сустава');
+
+-- Вставка данных в таблицу Medications
+INSERT INTO Medications (PatientID, DoctorID, MedicationName, Dosage, Frequency, StartDate, EndDate)
+VALUES
+(1, 1, 'Амоксициллин', '500 мг', '3 раза в день', '2025-09-30', '2025-10-10'),
+(2, 2, 'Ибупрофен', '200 мг', '2 раза в день', '2025-09-29', '2025-10-13');
+
+-- Вставка данных в таблицу Tests
+INSERT INTO Tests (PatientID, DoctorID, TestDate, TestType, Results)
+VALUES
+(1, 1, '2025-09-30', 'Общий анализ крови', 'Норма'),
+(2, 2, '2025-09-29', 'Биохимический анализ крови', 'Норма');
