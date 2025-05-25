@@ -29,5 +29,76 @@ namespace CNO.Pages
         {
 
         }
+
+        private void NavigateToPatients(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PatientPage());
+        }
+
+        private void NavigateToDoctors(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DoctorsPage());
+        }
+
+        private void NavigateToAppointments(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NavigateToDiagnosis(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditProfile(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NavigateToNewAppointment(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddRecordPage());
+        }
+       
+
+        private void AddNews_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WorkSchedule_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Appointments_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Memos_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

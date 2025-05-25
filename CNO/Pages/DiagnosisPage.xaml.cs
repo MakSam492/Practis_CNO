@@ -24,5 +24,15 @@ namespace CNO.Pages
         {
             InitializeComponent();
         }
+
+        private void GoToMainPage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

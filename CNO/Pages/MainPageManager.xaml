@@ -1,108 +1,278 @@
 ﻿<Page x:Class="CNO.Pages.MainPageManager"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CNO.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Главная страница менеджера" Background="#F5F5F5">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+      mc:Ignorable="d"
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="Панель Менеджера CNO"
+      FontFamily="Segoe UI">
 
-        <!-- Заголовок и кнопка выхода -->
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+    <Page.Resources>
+        <!-- Креативная Цветовая Палитра -->
+        <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#FF1A1D24"/>
+        <!-- Глубокий темный графит -->
+        <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#FFF9FAFC"/>
+        <!-- Очень светлый, почти белый -->
+        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFFFF"/>
 
-            <!-- Заголовок -->
-            <TextBlock Text="Главная страница менеджера" 
-                       FontSize="24" 
-                       FontWeight="Bold" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,20"/>
+        <SolidColorBrush x:Key="PrimaryAccentBrush" Color="#FF00BFFF"/>
+        <!-- Яркий DeepSkyBlue акцент -->
+        <SolidColorBrush x:Key="PrimaryAccentHoverBrush" Color="#FF00A0CC"/>
 
-            <!-- Кнопка выхода -->
-            <Button Content="Выйти" 
-                    Grid.Column="1" 
-                    Width="100" 
-                    Padding="10" 
-                    Background="#F44336" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Click="LogoutButton_Click"
-                    Margin="0,0,0,20"/>
-        </Grid>
+        <SolidColorBrush x:Key="SidebarTextBrush" Color="#FFD1D5DB"/>
+        <!-- Светло-серый для текста в сайдбаре -->
+        <SolidColorBrush x:Key="SidebarTextHoverBrush" Color="#FFFFFFFF"/>
 
-        <!-- Панель навигации -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <SolidColorBrush x:Key="PrimaryContentTextBrush" Color="#FF111827"/>
+        <!-- Почти черный для заголовков в контенте -->
+        <SolidColorBrush x:Key="SecondaryContentTextBrush" Color="#FF4B5563"/>
+        <!-- Темно-серый для основного текста -->
+        <SolidColorBrush x:Key="SubtleContentTextBrush" Color="#FF9CA3AF"/>
+        <!-- Серый для метаданных -->
+
+        <SolidColorBrush x:Key="BorderColor" Color="#FFE5E7EB"/>
+        <SolidColorBrush x:Key="ExitButtonBackgroundBrush" Color="#FF374151"/>
+        <!-- Темно-серый для кнопки выхода -->
+        <SolidColorBrush x:Key="ExitButtonHoverBrush" Color="#FF4B5563"/>
+
+
+        <!-- Стиль для Лого "CNO" -->
+        <Style x:Key="CreativeLogoStyle" TargetType="TextBlock">
+            <Setter Property="Text" Value="CNO"/>
+            <Setter Property="FontFamily" Value="Segoe UI Black"/>
+            <!-- Очень жирный шрифт -->
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,30,0,40"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" Direction="270" Opacity="0.3" BlurRadius="8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для Кнопок Навигации в Сайдбаре -->
+        <Style x:Key="CreativeSidebarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="15,5,15,5"/>
+            <Setter Property="Padding" Value="15,0,0,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="PART_Border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <Grid>
+                                <Border x:Name="PART_ActiveIndicator" Width="4" Height="25"
+                                        Background="{StaticResource PrimaryAccentBrush}"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Margin="-2,0,0,0" CornerRadius="2"
+                                        Opacity="0"/>
+
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                                    <ContentPresenter x:Name="PART_IconPresenter" Content="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" Margin="0,0,12,0"/>
+                                    <TextBlock x:Name="PART_Text" Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PART_Border" Property="Background" Value="#2A2D36"/>
+                                <Setter Property="Foreground" Value="{StaticResource SidebarTextHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="PART_Border" Property="Background" Value="#3A3D46"/>
+                                <Setter Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="Tag" Value="ActiveSection">
+                                <!-- Используем Tag для индикации активной секции -->
+                                <Setter TargetName="PART_ActiveIndicator" Property="Opacity" Value="1"/>
+                                <Setter Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для Иконок в Кнопках Навигации -->
+        <Style x:Key="NavIconStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+        </Style>
+
+        <!-- Стиль для Кнопки Выхода -->
+        <Style x:Key="CreativeExitButtonStyle" TargetType="Button" BasedOn="{StaticResource CreativeSidebarButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ExitButtonBackgroundBrush}"/>
+            <Setter Property="Margin" Value="15,30,15,20"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="PART_Border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0">
+                                <ContentPresenter Content="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" Margin="0,0,10,0"/>
+                                <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource ExitButtonHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource SidebarTextHoverBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!-- Стили для Новостной Ленты -->
+        <Style x:Key="NewsSectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryContentTextBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style x:Key="CreativeNewsCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="25,20,25,20"/>
+            <Setter Property="Margin" Value="0,0,10,25"/>
+            <!-- Добавлен правый отступ, чтобы ScrollViewer не прилипал -->
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="4" Direction="280" Color="#0F111827" Opacity="0.06" BlurRadius="15"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CreativeNewsTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+        <Style x:Key="CreativeNewsDescriptionStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryContentTextBrush}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="LineHeight" Value="24"/>
+        </Style>
+        <Style x:Key="CreativeNewsMetaStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource SubtleContentTextBrush}"/>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая Навигационная Панель -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBackgroundBrush}" >
+            <DockPanel>
+                <Button Name="btnLogout" DockPanel.Dock="Bottom"
+                        Content="Выход"
+                        Click="LogoutButton_Click"
+                        Style="{StaticResource CreativeExitButtonStyle}"
+                        ToolTip="Выйти из системы">
+                    <Button.Tag>
+                        <TextBlock Style="{StaticResource NavIconStyle}" Text=""/>
+                    </Button.Tag>
+                </Button>
+
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Style="{StaticResource CreativeLogoStyle}"/>
+
+                    <Button Name="btnManageAppointments" Content="Управление записями"
+                            Click="ManageAppointments_Click" Style="{StaticResource CreativeSidebarButtonStyle}">
+                        <!-- Для примера, Tag установлен на первой кнопке для демонстрации активного состояния. Управляйте этим из C# -->
+                        <!-- <Button.Tag>ActiveSection</Button.Tag> -->
+                        <Button.Tag>
+                            <TextBlock Style="{StaticResource NavIconStyle}" Text=""/>
+                        </Button.Tag>
+                    </Button>
+
+                    <Button Name="btnManagePatients" Content="Управление пациентами"
+                            Click="ManagePatients_Click" Style="{StaticResource CreativeSidebarButtonStyle}">
+                        <Button.Tag>
+                            <TextBlock Style="{StaticResource NavIconStyle}" Text=""/>
+                        </Button.Tag>
+                    </Button>
+
+                    <Button Name="btnManageDoctors" Content="Управление врачами"
+                            Click="ManageDoctors_Click" Style="{StaticResource CreativeSidebarButtonStyle}">
+                        <Button.Tag>
+                            <TextBlock Style="{StaticResource NavIconStyle}" Text=""/>
+                        </Button.Tag>
+                    </Button>
+
+                    <Button Name="btnEditProfile" Content="Настройки профиля"
+                            Click="EditProfile_Click" Style="{StaticResource CreativeSidebarButtonStyle}">
+                        <Button.Tag>
+                            <TextBlock Style="{StaticResource NavIconStyle}" Text=""/>
+                        </Button.Tag>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Правая Область Контента -->
+        <Grid Grid.Column="1" Background="{StaticResource ContentBackgroundBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Кнопка управления врачами -->
-            <Button Content="Управление врачами" 
-                    Grid.Row="0" 
-                    Grid.Column="0" 
-                    Margin="10" 
-                    Padding="20" 
-                    Background="#4CAF50" 
-                    Foreground="White" 
-                    FontSize="18" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Click="ManageDoctors_Click"/>
+            <Border Padding="35,30,35,15" Background="Transparent">
+                <TextBlock Text="Новости компании" Style="{StaticResource NewsSectionTitleStyle}"/>
+            </Border>
 
-            <!-- Кнопка управления пациентами -->
-            <Button Content="Управление пациентами" 
-                    Grid.Row="0" 
-                    Grid.Column="1" 
-                    Margin="10" 
-                    Padding="20" 
-                    Background="#2196F3" 
-                    Foreground="White" 
-                    FontSize="18" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Click="ManagePatients_Click"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="35,0,25,25">
+                <StackPanel x:Name="NewsItemsPanel" Orientation="Vertical">
+                    <Border Style="{StaticResource CreativeNewsCardStyle}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource CreativeNewsTitleStyle}" Text="Новая эра в управлении: Инновации CNO"/>
+                            <TextBlock Style="{StaticResource CreativeNewsDescriptionStyle}" Text="Наша компания объявляет о запуске передовой платформы, которая изменит подход к управлению рабочими процессами. Повышенная эффективность и интуитивный интерфейс ждут вас!"/>
+                            <TextBlock Style="{StaticResource CreativeNewsMetaStyle}" Text="18 июля 2024  |  Отдел Инноваций CNO"/>
+                        </StackPanel>
+                    </Border>
 
-            <!-- Кнопка управления записями на прием -->
-            <Button Content="Управление записями" 
-                    Grid.Row="1" 
-                    Grid.Column="0" 
-                    Margin="10" 
-                    Padding="20" 
-                    Background="#FF9800" 
-                    Foreground="White" 
-                    FontSize="18" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Click="ManageAppointments_Click"/>
+                    <Border Style="{StaticResource CreativeNewsCardStyle}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource CreativeNewsTitleStyle}" Text="Команда CNO победила на Tech Хакатоне!"/>
+                            <TextBlock Style="{StaticResource CreativeNewsDescriptionStyle}" Text="С гордостью сообщаем, что наши талантливые разработчики заняли первое место на престижном международном хакатоне, представив революционное решение для анализа данных."/>
+                            <TextBlock Style="{StaticResource CreativeNewsMetaStyle}" Text="15 июля 2024  |  Пресс-служба CNO"/>
+                        </StackPanel>
+                    </Border>
 
-            <!-- Кнопка редактирования личного кабинета -->
-            <Button Content="Редактировать кабинет" 
-                    Grid.Row="1" 
-                    Grid.Column="1" 
-                    Margin="10" 
-                    Padding="20" 
-                    Background="#9C27B0" 
-                    Foreground="White" 
-                    FontSize="18" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Click="EditProfile_Click"/>
+                    <Border Style="{StaticResource CreativeNewsCardStyle}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource CreativeNewsTitleStyle}" Text="Летний апгрейд: Что нового в сервисах CNO?"/>
+                            <TextBlock Style="{StaticResource CreativeNewsDescriptionStyle}" Text="Мы прислушались к вашим отзывам и подготовили крупное обновление наших сервисов. Новые функции, улучшенная производительность и еще больше возможностей для вашего бизнеса."/>
+                            <TextBlock Style="{StaticResource CreativeNewsMetaStyle}" Text="12 июля 2024  |  Команда Продукта"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

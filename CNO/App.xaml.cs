@@ -13,5 +13,7 @@ namespace CNO
     /// </summary>
     public partial class App : Application
     {
+        public static Users LogedUser;
+        public static db_cnoEntities1 DB = new db_cnoEntities1();
     }
 }

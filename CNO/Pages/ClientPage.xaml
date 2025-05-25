@@ -1,0 +1,233 @@
+﻿<Page x:Class="CNO.Pages.ClientPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Карта пациента"
+      FontFamily="Segoe UI">
+
+    <Grid Background="#FFF5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Шапка с заголовком -->
+        <Border Grid.Row="0" Background="#FF3F51B5" Padding="15">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resorces/Photo.jpg" Width="32" Height="32" />
+                <TextBlock Text="Карта пациента"
+                           FontSize="22"
+                           Foreground="White"
+                           FontWeight="SemiBold"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Основное содержимое -->
+        <ScrollViewer Grid.Row="1" Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Блок с фото и основной информацией -->
+                <StackPanel Grid.Column="0" Width="250" Margin="0,0,20,0">
+                    <Border BorderBrush="#FFBDBDBD" BorderThickness="1"
+                            CornerRadius="4" Background="White"
+                            Width="200" Height="250" HorizontalAlignment="Center">
+                        <Image Source="/Resorces/Photo.jpg" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <StackPanel Margin="0,20,0,0">
+                        <TextBlock Text="ОСНОВНАЯ ИНФОРМАЦИЯ"
+                                   FontWeight="Bold"
+                                   Foreground="#FF757575"
+                                   Margin="0,0,0,10"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                           
+                            <TextBlock Text="ID:" Margin="10,0,5,0" Foreground="#FF616161"/>
+                            <TextBlock Text="{Binding Patient.PatientID}" FontWeight="SemiBold"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                           
+                            <TextBlock Text="Дата рождения:" Margin="10,0,5,0" Foreground="#FF616161"/>
+                            <TextBlock Text="{Binding Patient.BirthDate, StringFormat=dd.MM.yyyy}" FontWeight="SemiBold"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                     
+                            <TextBlock Text="Пол:" Margin="10,0,5,0" Foreground="#FF616161"/>
+                            <TextBlock Text="{Binding Patient.Gender}" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Детальная информация -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Персональные данные -->
+                    <Border Grid.Row="0" Background="White" CornerRadius="4"
+                            BorderBrush="#FFE0E0E0" BorderThickness="1" Padding="15" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="ПЕРСОНАЛЬНЫЕ ДАННЫЕ"
+                                       FontWeight="Bold"
+                                       Foreground="#FF757575"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Фамилия" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.LastName}"
+                                             Margin="0,5,10,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,5">
+                                    <TextBlock Text="Имя" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.FirstName}"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Отчество" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.MiddleName}"
+                                             Margin="0,5,10,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,5">
+                                    <TextBlock Text="Телефон" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.Phone}"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5">
+                                    <TextBlock Text="Адрес" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.Address}"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Медицинская информация -->
+                    <Border Grid.Row="1" Background="White" CornerRadius="4"
+                            BorderBrush="#FFE0E0E0" BorderThickness="1" Padding="15" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="МЕДИЦИНСКАЯ ИНФОРМАЦИЯ"
+                                       FontWeight="Bold"
+                                       Foreground="#FF757575"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Группа крови" Foreground="#FF616161" FontSize="12"/>
+                                    <ComboBox ItemsSource="{Binding BloodTypes}"
+                                              SelectedItem="{Binding Patient.BloodType}"
+                                              Margin="0,5,10,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,5">
+                                    <TextBlock Text="Аллергии" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.Allergies}"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5">
+                                    <TextBlock Text="Хронические заболевания" Foreground="#FF616161" FontSize="12"/>
+                                    <TextBox Text="{Binding Patient.ChronicDiseases}"
+                                             AcceptsReturn="True"
+                                             Height="60"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- История посещений -->
+                    <Border Grid.Row="2" Background="White" CornerRadius="4"
+                            BorderBrush="#FFE0E0E0" BorderThickness="1" Padding="15">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="ИСТОРИЯ ПОСЕЩЕНИЙ"
+                                           FontWeight="Bold"
+                                           Foreground="#FF757575"/>
+                                <Button Content="Добавить запись"
+                                        Margin="20,0,0,0"
+                                        Command="{Binding AddMedicalRecordCommand}"/>
+                            </StackPanel>
+
+                            <DataGrid ItemsSource="{Binding MedicalHistory}"
+                                      AutoGenerateColumns="False"
+                                      HeadersVisibility="Column"
+                                      IsReadOnly="True"
+                                      SelectionMode="Single"
+                                      SelectionUnit="FullRow"
+                                      BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Дата"
+                                                        Binding="{Binding VisitDate, StringFormat=dd.MM.yyyy HH:mm}"
+                                                        Width="120"/>
+                                    <DataGridTextColumn Header="Врач"
+                                                        Binding="{Binding Doctor.FullName}"
+                                                        Width="180"/>
+                                    <DataGridTextColumn Header="Диагноз"
+                                                        Binding="{Binding Diagnosis}"
+                                                        Width="200"/>
+                                    <DataGridTextColumn Header="Лечение"
+                                                        Binding="{Binding Treatment}"
+                                                        Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Нижняя панель с кнопками -->
+        <Border Grid.Row="2" Background="#FFEEEEEE" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Сохранить"
+                        Background="#FF3F51B5"
+                        Command="{Binding SaveCommand}"
+                        Width="120"
+                        Margin="0,0,10,0"/>
+
+                <Button Content="Назад"
+                        Command="{Binding GoBackCommand}"
+                        Width="120"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

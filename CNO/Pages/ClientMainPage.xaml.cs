@@ -24,5 +24,15 @@ namespace CNO.Pages
         {
             InitializeComponent();
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BookAppointment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

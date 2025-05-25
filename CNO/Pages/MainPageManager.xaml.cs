@@ -24,5 +24,30 @@ namespace CNO.Pages
         {
             InitializeComponent();
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ManageDoctors_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DoctorsPage());
+        }
+
+        private void ManagePatients_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PatientPage());
+        }
+
+        private void ManageAppointments_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new RecordsPage());
+        }
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

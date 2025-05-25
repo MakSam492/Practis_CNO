@@ -24,5 +24,10 @@ namespace CNO.Pages
         {
             InitializeComponent();
         }
+
+        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -70,24 +70,7 @@
                  BorderThickness="0" 
                  Padding="10">
             <!-- Пример диагноза и лечения -->
-            <ListBoxItem>
-                <StackPanel>
-                    <TextBlock Text="Грипп" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Text="Лечение: Постельный режим, обильное питье, жаропонижающие препараты." FontSize="12"/>
-                </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem>
-                <StackPanel>
-                    <TextBlock Text="Гастрит" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Text="Лечение: Диета, антациды, препараты для снижения кислотности." FontSize="12"/>
-                </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem>
-                <StackPanel>
-                    <TextBlock Text="Гипертония" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Text="Лечение: Антигипертензивные препараты, диета с низким содержанием соли." FontSize="12"/>
-                </StackPanel>
-            </ListBoxItem>
+           
         </ListBox>
     </Grid>
 </Page>

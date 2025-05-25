@@ -2,81 +2,206 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CNO.Pages"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:CNO.Pages"  
+      xmlns:viewModels="clr-namespace:CNO.ViewModel" 
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Записи на прием" Background="#F5F5F5">
-    <Grid Margin="10">
+      d:DataContext="{d:DesignInstance Type=local:RecordsPage, IsDesignTimeCreatable=True}"
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Title="Медицинские записи">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PageBackgroundBrush" Color="#FFF4F6F8"/>
+        <SolidColorBrush x:Key="HeaderBackgroundBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="HeaderTextBrush" Color="#FF333333"/>
+        <SolidColorBrush x:Key="PrimaryButtonBrush" Color="#FF00A2E8"/>
+        <SolidColorBrush x:Key="PrimaryButtonHoverBrush" Color="#FF008FD8"/>
+        <SolidColorBrush x:Key="LightTextBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SubtleBorderBrush" Color="#FFDDE0E4"/>
+        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="CardBorderBrush" Color="#FFEBEEF0"/>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FF4A4A4A"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#FF7F8C9A"/>
+        <SolidColorBrush x:Key="TextTertiaryBrush" Color="#FFB0BAC3"/>
+        <SolidColorBrush x:Key="AccentColorBrush" Color="#FF0078D4"/>
+
+        <Style x:Key="RecordCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" Direction="270" Color="#1A000000" Opacity="0.1" BlurRadius="5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="RecordItemTemplate" DataType="{x:Type viewModels:RecordViewModel}">
+            <Border Style="{StaticResource RecordCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Width="6" Background="{Binding StatusIndicatorBrush}"
+                            CornerRadius="5,0,0,5"/>
+
+                    <Grid Grid.Column="1" Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                            <TextBlock Text="{Binding PatientName}" FontSize="18" FontWeight="SemiBold" 
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding RelativeDayInfo}" FontSize="12" FontWeight="Bold" 
+                                       Foreground="{Binding StatusIndicatorBrush}" Margin="0,2,0,5">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeDayInfo}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeDayInfo}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FormattedTime}" FontSize="20" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,0,5">
+                            <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}">
+                                <Run Text="Врач:"/>
+                                <Run Text="{Binding DoctorName}" FontWeight="Medium"/>
+                            </TextBlock>
+                            <TextBlock Text="{Binding FormattedDate}" FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Notes}" FontSize="13" 
+                                   Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="WrapWithOverflow" MaxHeight="60" Margin="0,5,0,5">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Notes}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Notes}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding StatusText}" FontSize="12" FontWeight="Medium"
+                                   Foreground="{Binding StatusIndicatorBrush}" HorizontalAlignment="Left" Margin="0,5,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StatusText}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding StatusText}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- Конвертер StringToVisibilityConverter УДАЛЕН ОТСЮДА -->
+
+    </Page.Resources>
+
+    <Grid Background="{StaticResource PageBackgroundBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок и кнопка выхода на главную страницу -->
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Background="{StaticResource HeaderBackgroundBrush}" BorderBrush="{StaticResource SubtleBorderBrush}" BorderThickness="0,0,0,1" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <!-- Заголовок -->
-            <TextBlock Text="Записи на прием" 
-                       FontSize="24" 
-                       FontWeight="Bold" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,20"/>
+                <Button Grid.Column="0" Click="BackButton_Click" ToolTip="Назад" Background="Transparent" BorderThickness="0" Padding="0" Margin="0,0,20,0" VerticalAlignment="Center" Cursor="Hand">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="" FontSize="22" Foreground="{StaticResource TextSecondaryBrush}"/>
+                </Button>
 
-            <!-- Кнопка выхода на главную страницу -->
-            <Button Content="На главную" 
-                    Grid.Column="1" 
-                    Width="100" 
-                    Padding="10" 
-                    Background="#2196F3" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Click="GoToMainPage_Click"
-                    Margin="0,0,0,20"/>
-        </Grid>
+                <TextBlock Grid.Column="1" Text="Список записей" FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource HeaderTextBrush}" VerticalAlignment="Center"/>
 
-        <!-- Кнопка добавления новой записи -->
-        <Button Content="Добавить запись" 
-                Grid.Row="1" 
-                Width="150" 
-                Padding="10" 
-                Background="#4CAF50" 
-                Foreground="White" 
-                FontSize="14" 
-                BorderThickness="0" 
-                Cursor="Hand" 
-                Click="AddAppointment_Click"
-                HorizontalAlignment="Left"
-                Margin="0,0,0,20"/>
+                <Button Grid.Column="2" Click="AddRecordButton_Click" Padding="15,10" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="{StaticResource PrimaryButtonBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}">
+                                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="16"/>
+                                                <ContentPresenter/>
+                                            </StackPanel>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource PrimaryButtonHoverBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <TextBlock Text="Добавить запись"/>
+                </Button>
+            </Grid>
+        </Border>
 
-        <!-- Список записей на прием -->
-        <ListBox x:Name="AppointmentsList" 
-                 Grid.Row="2" 
-                 Background="White" 
-                 BorderThickness="0" 
-                 Padding="10">
-            <!-- Пример записи на прием -->
-            <ListBoxItem>
-                <StackPanel>
-                    <TextBlock Text="Пациент: Иван Иванов" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Text="Врач: Доктор Петров" FontSize="12"/>
-                    <TextBlock Text="Дата и время: 12.10.2023, 10:00" FontSize="12"/>
-                </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem>
-                <StackPanel>
-                    <TextBlock Text="Пациент: Петр Петров" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Text="Врач: Доктор Сидоров" FontSize="12"/>
-                    <TextBlock Text="Дата и время: 13.10.2023, 14:00" FontSize="12"/>
-                </StackPanel>
-            </ListBoxItem>
-        </ListBox>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20,15,20,20">
+            <ItemsControl x:Name="RecordsListView" ItemTemplate="{StaticResource RecordItemTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Page>
